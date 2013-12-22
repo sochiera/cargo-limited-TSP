@@ -1,4 +1,5 @@
 #include "square.cpp"
+#include "src/population.cpp"
 #include <gtest/gtest.h>
  
 TEST(SquareRootTest, PositiveNos) { 
@@ -11,6 +12,11 @@ TEST(SquareRootTest, PositiveNos) {
 TEST(SquareRootTest, NegativeNos) {
     ASSERT_EQ(-1.0, squareRoot(-15.0));
     ASSERT_EQ(-1.0, squareRoot(-0.2));
+}
+
+TEST(PopulationTest, HasGivenInConstructorSize) {
+    Population p(30);
+    ASSERT_EQ(p.size(), 30);
 }
  
 int main(int argc, char **argv) {
