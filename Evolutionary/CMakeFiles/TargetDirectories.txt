@@ -1,2 +1,0 @@
-/home/anakin/Dokumenty/Metody-optymalizacji/cargo-limited-TSP/Evolutionary/CMakeFiles/Solve.dir
-/home/anakin/Dokumenty/Metody-optymalizacji/cargo-limited-TSP/Evolutionary/CMakeFiles/runTests.dir
