@@ -1,10 +1,8 @@
-#include <math.h>
- 
-double squareRoot(const double a) {
-    double b = sqrt(a);
-    if(b != b) { // nan check
-        return -1.0;
-    }else{
-        return sqrt(a);
-    }
+#include <iostream>
+#include "square.cpp"
+
+int main()
+{
+	std::cout << squareRoot(10.34) << std::endl;
+	return 0;
 }
