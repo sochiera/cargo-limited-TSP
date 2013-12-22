@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/Solve.dir/main.cpp.o  -o Solve -rdynamic 

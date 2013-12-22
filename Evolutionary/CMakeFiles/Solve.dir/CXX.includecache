@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/anakin/Dokumenty/Metody-optymalizacji/cargo-limited-TSP/Evolutionary/main.cpp
+iostream
+-
+square.cpp
+/home/anakin/Dokumenty/Metody-optymalizacji/cargo-limited-TSP/Evolutionary/square.cpp
+
+/home/anakin/Dokumenty/Metody-optymalizacji/cargo-limited-TSP/Evolutionary/square.cpp
+square.hpp
+/home/anakin/Dokumenty/Metody-optymalizacji/cargo-limited-TSP/Evolutionary/square.hpp
+
+/home/anakin/Dokumenty/Metody-optymalizacji/cargo-limited-TSP/Evolutionary/square.hpp
+math.h
+-
+

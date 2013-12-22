@@ -5,7 +5,7 @@ using namespace std;
 
 vector <vector <int> > Distances;
 set <int> remainingCustomers;
-int N, result;
+int N;
 
 void readInput() {
 	cin >> N;
@@ -21,8 +21,9 @@ void readInput() {
 }
 
 int shortestRoute() {
-	result = 0;
+	int result = 0;
 	int currentVertex = 0;
+	cout << "Starting at " << currentVertex << endl;
 	int capacity = 3;
 	while(!remainingCustomers.empty()){
 		int minDistance = currentVertex == 0 ? Distances[0][*remainingCustomers.begin()] : Distances[currentVertex][0];
@@ -33,8 +34,22 @@ int shortestRoute() {
 				closestVertex = *it;
 				minDistance = Distances[currentVertex][closestVertex];
 			}
-		
+		result += Distances[currentVertex][closestVertex];
+		if(closestVertex != 0) capacity--;
+		if(capacity == 0 || closestVertex == 0)
+		{
+			result += Distances[closestVertex][0];
+			currentVertex = 0;
+			capacity = 3;
+			cout << "Returning to base." << endl;
+		}
+		else {
+			cout << "Moving from " << currentVertex << " to " << closestVertex << endl;
+			remainingCustomers.erase(closestVertex);
+			currentVertex = closestVertex;
+		}
 	}
+	return result;
 }
 
 int main() {
