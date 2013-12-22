@@ -23,33 +23,38 @@ void readInput() {
 int shortestRoute() {
 	int result = 0;
 	int currentVertex = 0;
+	int capacity;
 	cout << "Starting at " << currentVertex << endl;
-	int capacity = 3;
 	while(!remainingCustomers.empty()){
+		if(capacity == 0)
+		{
+			result += Distances[currentVertex][0];
+			cout << "Returning to base." << endl;
+			currentVertex = 0;
+		}
+		if(currentVertex == 0) capacity = 3;
 		int minDistance = currentVertex == 0 ? Distances[0][*remainingCustomers.begin()] : Distances[currentVertex][0];
 		int closestVertex = currentVertex == 0 ? *remainingCustomers.begin() : 0;
-		for(set <int>::iterator it = remainingCustomers.begin(); it != remainingCustomers.end(); it++)
-			if(Distances[currentVertex][*it] < Distances[currentVertex][closestVertex])
+		cout << "Currently at " << currentVertex << " min is " << minDistance << " at " << closestVertex << endl;
+		for(set <int>::iterator it = remainingCustomers.begin(); it != remainingCustomers.end(); it++) {
+			cout << "Comparing with distance to " << *it << " which is " << Distances[currentVertex][*it] << endl;
+			if(Distances[currentVertex][*it] < minDistance)
 			{
+				cout << "New minDistance = " << Distances[currentVertex][*it] << " (to " << *it << ")" << endl;
 				closestVertex = *it;
 				minDistance = Distances[currentVertex][closestVertex];
 			}
-		result += Distances[currentVertex][closestVertex];
-		if(closestVertex != 0) capacity--;
-		if(capacity == 0 || closestVertex == 0)
-		{
-			result += Distances[closestVertex][0];
-			currentVertex = 0;
-			capacity = 3;
-			cout << "Returning to base." << endl;
 		}
-		else {
+		result += Distances[currentVertex][closestVertex];
+		if(closestVertex != 0) {
+			capacity--;
 			cout << "Moving from " << currentVertex << " to " << closestVertex << endl;
 			remainingCustomers.erase(closestVertex);
 			currentVertex = closestVertex;
 		}
+		else currentVertex = 0;
 	}
-	return result;
+	return result + Distances[currentVertex][0];
 }
 
 int main() {
