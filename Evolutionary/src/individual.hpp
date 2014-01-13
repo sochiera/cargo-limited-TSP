@@ -4,18 +4,20 @@
 using namespace std;
 
 #include <vector>
-
+#include "defines.hpp"
 
 class Individual {
 public:
-	struct Course {
-		vector<int> Cities;
-	};
+	typedef vector<int> Course;
 
 	Individual(vector<Course> courses);
+	Individual();
+
+
+	vector<Course> getCourses();
 
 private:
-	vector <Course> courses_;
+	vector<Course> courses_;
 };
 
 #endif
