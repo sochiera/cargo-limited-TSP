@@ -47,7 +47,6 @@ void Individual::evaluate(vector< vector<int> > dist){
 	fitnessValue = result;
 }
 
-
 int Individual::computeOneCourse(vector< vector<int> > dist, Course c){
 	int result = 0;
 	if(!c.size()) return result;
