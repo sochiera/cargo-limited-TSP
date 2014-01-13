@@ -8,5 +8,5 @@ unsigned int Population::size() {
 
 Population::Population(int size) {
 	while(size--)
-		individuals_.push_back(1);
+		individuals_.push_back(Individual(vector<Individual::Course>()));
 };

@@ -1,4 +1,5 @@
 #include "src/population.cpp"
+#include "src/individual.cpp"
 #include <gtest/gtest.h>
 
 
