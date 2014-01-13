@@ -1,4 +1,5 @@
 #include "population.hpp"
+#include <algorithm>
 
 using namespace std;
 
@@ -25,4 +26,15 @@ void Population::mutation(){
 	for(int i = 0; i < this->size(); i++) {
 		if(double(rand() % 10000)/10000.0 < SIGMA) individuals_[i].mutate();
 	}
+}
+
+void Population::replacement() {
+	sort(individuals_.begin(), individuals_.end());
+	while(individuals_.size() > POPULATION_SIZE) individuals_.pop_back();	
+}
+
+void Population::iteration() {
+	reproduction();
+	mutation();
+	replacement();
 }
