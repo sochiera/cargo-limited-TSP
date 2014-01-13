@@ -7,10 +7,10 @@ unsigned int Population::size() {
 	return individuals_.size();
 }
 
-Population::Population() {
+Population::Population(int cities) {
 	int size = POPULATION_SIZE;
 	while(size--)
-		individuals_.push_back(Individual(vector<Individual::Course>()));
+		individuals_.push_back(Individual(cities));
 };
 
 void Population::reproduction(){

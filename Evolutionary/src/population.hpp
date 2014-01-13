@@ -8,7 +8,7 @@ using namespace std;
 
 class Population {
 public:
-	Population();
+	Population(int cities);
 
 	void iteration();
 	unsigned int size();

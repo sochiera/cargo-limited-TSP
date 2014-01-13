@@ -4,7 +4,7 @@
 #include "src/defines.hpp"
 
 TEST(PopulationTest, HasDefinedSize) {
-    Population p;
+    Population p(6);
     ASSERT_EQ(p.size(), POPULATION_SIZE);
     ASSERT_EQ(0, POPULATION_SIZE%2);
 }
