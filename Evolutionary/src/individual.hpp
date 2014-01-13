@@ -13,11 +13,12 @@ public:
 	Individual(vector<Course> courses);
 	Individual(int cities);
 
-	vector<Course> getCourses();
+	vector<Course> getCourses() const;
 
 	void evaluate(vector< vector<int> > dist);
 	int getValue() const;
-
+	pair<Individual, Individual> crossover(const Individual & dad) const;
+	void mutate();
 	bool operator<(const Individual & another) const;
 
 private:

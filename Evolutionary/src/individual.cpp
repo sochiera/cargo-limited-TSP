@@ -28,7 +28,7 @@ Individual::Individual(int numberOfCities) : fitnessValue(-1) {
 	}
 }
 
-vector<Individual::Course> Individual::getCourses(){
+vector<Individual::Course> Individual::getCourses() const {
 	return courses_;
 }
 
@@ -60,4 +60,12 @@ int Individual::computeOneCourse(vector< vector<int> > dist, Course c){
 
 bool Individual::operator<(const Individual & another) const {
 	return getValue() < another.getValue();
+}
+
+pair<Individual, Individual> Individual::crossover(const Individual & dad) const {
+	return pair<Individual, Individual>(*this, dad);
+}
+
+void Individual::mutate() {
+
 }

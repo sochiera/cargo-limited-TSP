@@ -6,6 +6,7 @@
 TEST(PopulationTest, HasDefinedSize) {
     Population p;
     ASSERT_EQ(p.size(), POPULATION_SIZE);
+    ASSERT_EQ(0, POPULATION_SIZE%2);
 }
 
 TEST(IndividualTest, RandomIndividualHasVisitedDefinedNumberOfCities) {
@@ -101,7 +102,7 @@ TEST(IndividualTest, OneIndividualBetterThanAnother) {
 
     Individual ind2(courses2);
     ind2.evaluate(dist);
-    
+
     ASSERT_EQ(true, ind2 < ind);
 }
  
