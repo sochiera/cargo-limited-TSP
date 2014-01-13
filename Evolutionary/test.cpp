@@ -61,7 +61,8 @@ TEST(IndividualTest, FitnessComputesCorrectly) {
     c.push_back(4);
     courses.push_back(c);
     Individual ind(courses);
-    ASSERT_EQ(ind.evaluate(dist), 15);
+    ind.evaluate(dist);
+    ASSERT_EQ(ind.getValue(), 15);
 }
  
 int main(int argc, char **argv) {

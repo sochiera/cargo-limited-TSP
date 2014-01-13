@@ -2,18 +2,15 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <cassert>
 
 using namespace std;
 
-Individual::Individual(vector<Individual::Course> courses){
+Individual::Individual(vector<Individual::Course> courses) : fitnessValue(-1) {
 	courses_ = courses;
 }
 
-vector<Individual::Course> Individual::getCourses(){
-	return courses_;
-}
-
-Individual::Individual(int numberOfCities){
+Individual::Individual(int numberOfCities) : fitnessValue(-1) {
 	vector<int> cities;
 	for(int i = 1; i <= numberOfCities; i++){
 		cities.push_back(i);
@@ -31,13 +28,23 @@ Individual::Individual(int numberOfCities){
 	}
 }
 
-int Individual::evaluate(vector< vector<int> > dist){
+vector<Individual::Course> Individual::getCourses(){
+	return courses_;
+}
+
+int Individual::getValue() const {
+	assert(fitnessValue != -1);
+	return fitnessValue;
+}
+
+
+void Individual::evaluate(vector< vector<int> > dist){
+	if(fitnessValue != -1) return;
 	int result = 0;
 	for(int i = 0; i < courses_.size(); i++){
 		result += computeOneCourse(dist, courses_[i]);
 	}
-	return result;
-
+	fitnessValue = result;
 }
 
 
@@ -50,4 +57,8 @@ int Individual::computeOneCourse(vector< vector<int> > dist, Course c){
 	}
 	result += dist[c.back()][0];
 	return result;
+}
+
+bool Individual::operator<(const Individual & another) const {
+	return getValue() < another.getValue();
 }
