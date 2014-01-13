@@ -9,17 +9,17 @@ TEST(PopulationTest, HasDefinedSize) {
 }
 
 TEST(IndividualTest, RandomIndividualHasVisitedDefinedNumberOfCities) {
-    Individual ind;
+    Individual ind(60);
     vector<Individual::Course> courses = ind.getCourses();
     int sum = 0;
     for(int i = 0; i < courses.size(); i++){
         sum += courses[i].size();
     }
-    ASSERT_EQ(sum, CITIES);
+    ASSERT_EQ(sum, 60);
 }
 
 TEST(IndividualTest, RandomIndividualHasVisitedAllCities) {
-    Individual ind;
+    Individual ind(40);
     vector<int> cities;
     vector<Individual::Course> courses = ind.getCourses();
     for(vector<Individual::Course>::iterator it = courses.begin(); it != courses.end(); it++){
@@ -29,10 +29,39 @@ TEST(IndividualTest, RandomIndividualHasVisitedAllCities) {
     }
     sort(cities.begin(), cities.end());
     
-    ASSERT_EQ(cities.size(), CITIES);
-    for(int i = 0; i < CITIES; i++){
-        ASSERT_EQ(cities[i], i);
+    ASSERT_EQ(cities.size(), 40);
+    for(int i = 0; i < 40; i++){
+        ASSERT_EQ(cities[i], i+1);
     }
+}
+
+TEST(IndividualTest, FitnessComputesCorrectly) {
+    int tab[] = {0, 1, 1, 1, 2, 2, 2,
+               2, 0, 3, 1, 3, 1, 2,
+               3, 1, 0, 2, 1, 3, 2,
+               2, 3, 3, 0, 2, 1, 3,
+               1, 1, 3, 1, 0, 3, 1,
+               2, 4, 3, 1, 3, 0, 3,
+               3, 1, 1, 1, 1, 2, 0};
+    vector< vector<int> > dist;
+    for(int i = 0; i < 7; i++){
+        vector<int> distToOne;
+        distToOne.assign(tab + 7*i, tab + 7*i+7);
+        dist.push_back(distToOne);
+    }
+    
+    vector<Individual::Course> courses;
+    Individual::Course a;
+    a.push_back(1); a.push_back(6); a.push_back(2); 
+    courses.push_back(a);
+    Individual::Course b;
+    b.push_back(5); b.push_back(3); 
+    courses.push_back(b);
+    Individual::Course c;
+    c.push_back(4);
+    courses.push_back(c);
+    Individual ind(courses);
+    ASSERT_EQ(ind.evaluate(dist), 15);
 }
  
 int main(int argc, char **argv) {

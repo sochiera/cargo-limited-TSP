@@ -11,13 +11,16 @@ public:
 	typedef vector<int> Course;
 
 	Individual(vector<Course> courses);
-	Individual();
-
+	Individual(int cities);
 
 	vector<Course> getCourses();
 
+	int evaluate(vector< vector<int> > dist);
+
 private:
 	vector<Course> courses_;
+
+	int computeOneCourse(vector< vector<int> > dist, Course c);
 };
 
 #endif

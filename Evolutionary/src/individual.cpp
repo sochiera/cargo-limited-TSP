@@ -13,15 +13,15 @@ vector<Individual::Course> Individual::getCourses(){
 	return courses_;
 }
 
-Individual::Individual(){
+Individual::Individual(int numberOfCities){
 	vector<int> cities;
-	for(int i = 0; i < CITIES; i++){
+	for(int i = 1; i <= numberOfCities; i++){
 		cities.push_back(i);
 		random_shuffle(cities.begin(), cities.end());
 		while(cities.size()){
 			Course course;
 			for(int j = 0; j < CITIES_PER_COURSE; j++){
-				course.push_back(*cities.rbegin());
+				course.push_back(cities.back());
 				cities.pop_back();
 				if(!cities.size())
 					break;
@@ -29,4 +29,25 @@ Individual::Individual(){
 			courses_.push_back(course);
 		}
 	}
+}
+
+int Individual::evaluate(vector< vector<int> > dist){
+	int result = 0;
+	for(int i = 0; i < courses_.size(); i++){
+		result += computeOneCourse(dist, courses_[i]);
+	}
+	return result;
+
+}
+
+
+int Individual::computeOneCourse(vector< vector<int> > dist, Course c){
+	int result = 0;
+	if(!c.size()) return result;
+	result += dist[0][c[0]];
+	for(int i = 1; i < c.size(); i++){
+		result += dist[c[i-1]][c[i]];
+	}
+	result += dist[c.back()][0];
+	return result;
 }

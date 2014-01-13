@@ -1,3 +1,2 @@
-#define CITIES 40 
 #define POPULATION_SIZE 100 
 #define CITIES_PER_COURSE 3
