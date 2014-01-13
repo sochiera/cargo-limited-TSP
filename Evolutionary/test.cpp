@@ -6,6 +6,7 @@
 TEST(PopulationTest, HasDefinedSize) {
     Population p;
     ASSERT_EQ(p.size(), POPULATION_SIZE);
+    ASSERT_EQ(0, POPULATION_SIZE%2);
 }
 
 TEST(IndividualTest, RandomIndividualHasVisitedDefinedNumberOfCities) {
@@ -61,7 +62,48 @@ TEST(IndividualTest, FitnessComputesCorrectly) {
     c.push_back(4);
     courses.push_back(c);
     Individual ind(courses);
-    ASSERT_EQ(ind.evaluate(dist), 15);
+    ind.evaluate(dist);
+    ASSERT_EQ(ind.getValue(), 15);
+}
+
+TEST(IndividualTest, OneIndividualBetterThanAnother) {
+    int tab[] = {0, 1, 1, 1, 2, 2, 2,
+               2, 0, 3, 1, 3, 1, 2,
+               3, 1, 0, 2, 1, 3, 2,
+               2, 3, 3, 0, 2, 1, 3,
+               1, 1, 3, 1, 0, 3, 1,
+               2, 4, 3, 1, 3, 0, 3,
+               3, 1, 1, 1, 1, 2, 0};
+    vector< vector<int> > dist;
+    for(int i = 0; i < 7; i++){
+        vector<int> distToOne;
+        distToOne.assign(tab + 7*i, tab + 7*i+7);
+        dist.push_back(distToOne);
+    }
+    
+    vector<Individual::Course> courses1;
+    Individual::Course a;
+    a.push_back(1); a.push_back(6); a.push_back(2); 
+    courses1.push_back(a);
+    Individual::Course b;
+    b.push_back(5); b.push_back(3); 
+    courses1.push_back(b);
+    Individual::Course c;
+    c.push_back(4);
+    courses1.push_back(c);
+
+    Individual ind(courses1);
+    ind.evaluate(dist);
+
+    vector<Individual::Course> courses2;
+    courses2.push_back(a);
+    b.push_back(4);
+    courses2.push_back(b);
+
+    Individual ind2(courses2);
+    ind2.evaluate(dist);
+
+    ASSERT_EQ(true, ind2 < ind);
 }
  
 int main(int argc, char **argv) {

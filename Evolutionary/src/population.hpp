@@ -10,9 +10,14 @@ class Population {
 public:
 	Population();
 
+	void iteration();
 	unsigned int size();
 
 private:
+	void reproduction();
+	void mutation();
+	void replacement();
+
 	std::vector <Individual> individuals_;
 };
 
