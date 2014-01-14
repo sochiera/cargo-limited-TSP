@@ -14,6 +14,10 @@ public:
 	unsigned int size();
 	int getBest();
 
+	bool doubleRandom(double d){
+	return (double(rand() % 10000)/10000.0 < d);
+	}
+
 private:
 	void reproduction();
 	void mutation();

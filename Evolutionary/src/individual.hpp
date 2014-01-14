@@ -21,6 +21,10 @@ public:
 	void mutate();
 	bool operator<(const Individual & another) const;
 
+	bool doubleRandom(double d){
+	return (double(rand() % 10000)/10000.0 < d);
+	}
+
 private:
 	vector<Course> courses_;
 	int fitnessValue;

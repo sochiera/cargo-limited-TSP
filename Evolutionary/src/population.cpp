@@ -47,6 +47,7 @@ void Population::replacement() {
 void Population::iteration() {
 	reproduction();
 	mutation();
+	evaluation();
 	replacement();
 }
 

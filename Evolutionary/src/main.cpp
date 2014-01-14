@@ -1,6 +1,5 @@
 #include <iostream>
-#include "src/defines.hpp" 
-#include "src/population.hpp"
+#include "population.hpp"
 
 
 vector <vector <int> > Distances;
@@ -21,11 +20,11 @@ int main()
 {
  	cout << "Main." << endl;
 	srand(time(0));
-	// Population *p = new Population(N, Distances);
-	// int iterations = 10000;
-	// while(iterations--){
-	// 	p->iteration();
-	// 	cout << p->getBest() << endl;
-	// }
+	Population *p = new Population(N, Distances);
+	int iterations = 10000;
+	while(iterations--){
+		p->iteration();
+		cout << p->getBest() << endl;
+	}
 	return 0;
 }

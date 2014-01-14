@@ -9,9 +9,7 @@
 #include <cstdlib>
 #include <ctime>
 
-bool doubleRandom(double d){
-	return (double(rand() % 10000)/10000.0 < d);
-}
+
 
 #endif
 
