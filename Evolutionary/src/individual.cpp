@@ -67,5 +67,8 @@ pair<Individual, Individual> Individual::crossover(const Individual & dad) const
 }
 
 void Individual::mutate() {
-
+	for(int i = 0; i < courses_.size(); i++){
+		if(doubleRandom(SIGMA2))
+			random_shuffle(courses_[i].begin(), courses_[i].end());
+	}
 }

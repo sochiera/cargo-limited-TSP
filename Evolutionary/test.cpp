@@ -105,7 +105,18 @@ TEST(IndividualTest, OneIndividualBetterThanAnother) {
 
     ASSERT_EQ(true, ind2 < ind);
 }
- 
+
+TEST(DoubleRandomTest, DoubleRandomFunctionWorksAsItShould) //UNSTABLE
+{
+    srand(time(0));
+    int times = 0;
+    int n = 100000;
+    while(n--){
+        if(doubleRandom(0.1)) times++;
+    }
+    ASSERT_LT(times, 10200);
+    ASSERT_GT(times,  9800);
+}
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

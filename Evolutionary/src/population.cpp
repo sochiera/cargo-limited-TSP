@@ -24,7 +24,7 @@ void Population::reproduction(){
 
 void Population::mutation(){
 	for(int i = 0; i < this->size(); i++) {
-		if(double(rand() % 10000)/10000.0 < SIGMA) individuals_[i].mutate();
+		if(doubleRandom(SIGMA1)) individuals_[i].mutate();
 	}
 }
 
