@@ -20,8 +20,9 @@ int main()
 {
  	cout << "Main." << endl;
 	srand(time(0));
+	readInput();
 	Population *p = new Population(N, Distances);
-	int iterations = 10000;
+	int iterations = 14;
 	while(iterations--){
 		p->iteration();
 		cout << p->getBest() << endl;

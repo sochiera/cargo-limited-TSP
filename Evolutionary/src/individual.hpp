@@ -22,7 +22,7 @@ public:
 	bool operator<(const Individual & another) const;
 
 	bool doubleRandom(double d){
-	return (double(rand() % 10000)/10000.0 < d);
+		return (double(rand() % 10000)/10000.0 < d);
 	}
 
 private:
