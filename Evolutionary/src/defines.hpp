@@ -1,7 +1,7 @@
 #ifndef DEFINES_H_
 #define DEFINES_H_
 
-#define POPULATION_SIZE 4 
+#define POPULATION_SIZE 1000 
 #define CITIES_PER_COURSE 3
 #define SIGMA1 0.5
 #define SIGMA2 0.3
