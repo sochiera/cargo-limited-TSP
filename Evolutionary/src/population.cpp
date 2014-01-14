@@ -49,3 +49,7 @@ void Population::iteration() {
 	mutation();
 	replacement();
 }
+
+int Population::getBest() {
+	return best_;
+}

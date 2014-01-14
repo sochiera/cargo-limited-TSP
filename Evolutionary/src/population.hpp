@@ -12,6 +12,7 @@ public:
 
 	void iteration();
 	unsigned int size();
+	int getBest();
 
 private:
 	void reproduction();
