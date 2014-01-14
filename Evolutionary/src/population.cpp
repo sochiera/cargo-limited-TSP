@@ -7,7 +7,9 @@ unsigned int Population::size() {
 	return individuals_.size();
 }
 
-Population::Population(int cities) {
+Population::Population(int cities, vector<vector<int> > dist) :
+	best_(100000000), dist_(dist)	
+{
 	int size = POPULATION_SIZE;
 	while(size--)
 		individuals_.push_back(Individual(cities));
@@ -27,6 +29,15 @@ void Population::mutation(){
 		if(doubleRandom(SIGMA1)) individuals_[i].mutate();
 	}
 }
+
+void Population::evaluation() {
+	for(int i = 0; i < individuals_.size(); i++) {
+		individuals_[i].evaluate(dist_);
+		if(individuals_[i].getValue() < best_)
+			best_ = individuals_[i].getValue();
+	}
+}
+
 
 void Population::replacement() {
 	sort(individuals_.begin(), individuals_.end());

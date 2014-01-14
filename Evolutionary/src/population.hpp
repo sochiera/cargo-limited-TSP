@@ -8,7 +8,7 @@ using namespace std;
 
 class Population {
 public:
-	Population(int cities);
+	Population(int cities, vector<vector<int> > dist);
 
 	void iteration();
 	unsigned int size();
@@ -16,9 +16,12 @@ public:
 private:
 	void reproduction();
 	void mutation();
+	void evaluation();
 	void replacement();
 
 	std::vector <Individual> individuals_;
+	int best_;
+	vector<vector<int> > dist_;
 };
 
 #endif
