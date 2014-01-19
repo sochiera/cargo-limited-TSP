@@ -21,6 +21,7 @@ public:
 private:
 	void reproduction();
 	void mutation();
+	void localSearch();
 	void evaluation();
 	void replacement();
 

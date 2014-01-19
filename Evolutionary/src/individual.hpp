@@ -14,13 +14,15 @@ public:
 	Individual(int cities);
 
 	vector<Course> getCourses() const;
-
-	void evaluate(vector< vector<int> > dist);
 	int getValue() const;
-	pair<Individual, Individual> crossover(const Individual & dad) const;
-	void mutate();
-	bool operator<(const Individual & another) const;
 
+	void mutate();
+	pair<Individual, Individual> crossover(const Individual & dad) const;
+	void localSearch(vector< vector<int> > dist);
+	void evaluate(vector< vector<int> > dist);
+
+	bool operator<(const Individual & another) const;
+	
 	bool doubleRandom(double d){
 		return (double(rand() % 10000)/10000.0 < d);
 	}
@@ -30,6 +32,8 @@ private:
 	int fitnessValue;
 
 	int computeOneCourse(vector< vector<int> > dist, Course c);
+	Course optimizeCourse(vector< vector<int> > dist, Course c);
+
 };
 
 #endif

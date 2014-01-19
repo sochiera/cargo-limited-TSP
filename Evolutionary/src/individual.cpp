@@ -11,9 +11,6 @@ Individual::Individual(vector<Individual::Course> courses) : fitnessValue(-1) {
 }
 
 
-// #include<iostream>
-
-
 Individual::Individual(int numberOfCities) : fitnessValue(-1) {
 	vector<int> cities;
 	for(int i = 1; i <= numberOfCities; i++){
@@ -30,15 +27,6 @@ Individual::Individual(int numberOfCities) : fitnessValue(-1) {
 		}
 		courses_.push_back(course);
 	}
-
- //    for(vector<Course>::iterator it = courses_.begin(); it != courses_.end(); it++){
- //        for(vector<int>::iterator cit = it->begin(); cit != it->end(); cit++){
- //            cout << *cit << "   ";
- //        }
- //        cout << "\n          ";
- //    }
-	// cout << "\n\n";
-
 
 }
 
@@ -59,7 +47,6 @@ void Individual::evaluate(vector< vector<int> > dist){
 		result += computeOneCourse(dist, courses_[i]);
 	}
 	fitnessValue = result;
-	// cout << "  final:  " << result << "\n";
 }
 
 int Individual::computeOneCourse(vector< vector<int> > dist, Course c){
@@ -88,4 +75,42 @@ void Individual::mutate() {
 			fitnessValue = -1;
 		}
 	}
+}
+
+void Individual::localSearch(vector< vector<int> > dist) {
+	for(int i = 0; i < courses_.size(); i++){\
+		courses_[i] = optimizeCourse(dist, courses_[i]);
+		fitnessValue = -1;
+	}
+}
+
+// Ugly function, needs refactoring
+Individual::Course Individual::optimizeCourse(vector< vector<int> > dist, Course c) {
+	int courseDistance = computeOneCourse(dist, c);
+	if(CITIES_PER_COURSE == 3){	
+		int shuffledCities1[] = {c[0], c[2], c[1]};
+		int shuffledCities2[] = {c[1], c[0], c[2]};
+		Course shuffledCourse(shuffledCities1, shuffledCities1+3);
+		if(computeOneCourse(dist, shuffledCourse) < courseDistance){
+			courseDistance = computeOneCourse(dist, shuffledCourse);
+			c = shuffledCourse;
+		}
+		c.assign(shuffledCities2, shuffledCities2+3);
+		if(computeOneCourse(dist, shuffledCourse) < courseDistance){
+			courseDistance = computeOneCourse(dist, shuffledCourse);
+			c = shuffledCourse;
+		}
+	}
+	else{
+		int times = 4;
+		while(times--){
+			Course shuffledCourse(c);
+			random_shuffle(shuffledCourse.begin(), shuffledCourse.end());
+			if(computeOneCourse(dist, shuffledCourse) < courseDistance){
+				courseDistance = computeOneCourse(dist, shuffledCourse);
+				c = shuffledCourse;
+			}
+		}
+	}
+	return c;
 }

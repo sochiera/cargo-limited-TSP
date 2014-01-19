@@ -30,6 +30,12 @@ void Population::mutation(){
 	}
 }
 
+void Population::localSearch(){
+	for(int i = 0; i < this->size(); i++) {
+		individuals_[i].localSearch(dist_);
+	}
+}
+
 void Population::evaluation() {
 	for(int i = 0; i < individuals_.size(); i++) {
 		individuals_[i].evaluate(dist_);
@@ -46,7 +52,8 @@ void Population::replacement() {
 
 void Population::iteration() {
 	reproduction();
-	mutation();
+	// mutation();
+	localSearch();
 	evaluation();
 	replacement();
 }
