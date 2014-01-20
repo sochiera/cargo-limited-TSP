@@ -28,6 +28,7 @@ private:
 	std::vector <Individual> individuals_;
 	int best_;
 	vector<vector<int> > dist_;
+	int cities_;
 };
 
 #endif

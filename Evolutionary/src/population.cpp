@@ -8,7 +8,7 @@ unsigned int Population::size() {
 }
 
 Population::Population(int cities, vector<vector<int> > dist) :
-	best_(100000000), dist_(dist)	
+	best_(100000000), dist_(dist), cities_(cities)
 {
 	int size = POPULATION_SIZE;
 	while(size--)
@@ -24,7 +24,7 @@ void Population::reproduction(){
 
 void Population::mutation(){
 	for(int i = 0; i < this->size(); i++) {
-		if(doubleRandom(SIGMA1)) individuals_[i].mutate();
+		while(doubleRandom(SIGMA1)) individuals_[i].mutate();
 	}
 }
 
@@ -42,10 +42,14 @@ void Population::evaluation() {
 	}
 }
 
-
+#include <iostream>
 void Population::replacement() {
 	sort(individuals_.begin(), individuals_.end());
-	while(individuals_.size() > POPULATION_SIZE) individuals_.pop_back();	
+	for(int i = 0; i < ELITE; i++)
+		individuals_.push_back(individuals_[i]);
+	sort(individuals_.begin(), individuals_.end());	
+	while(individuals_.size() > POPULATION_SIZE)
+		individuals_.pop_back();
 }
 
 void Population::iteration() {

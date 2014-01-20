@@ -76,7 +76,7 @@ Individual Individual::crossover(const Individual & dad) const {
     fill(was, was + cities_, false);
 
     for(int i = 0; i < courses_.size(); i++) {
-    	if(doubleRandom(0.5)) childCourses.push_back(courses_[i]);
+    	if(doubleRandom(SIGMA2)) childCourses.push_back(courses_[i]);
     }
 
     for(int i = 0; i < childCourses.size(); i++) {
