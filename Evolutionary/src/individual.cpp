@@ -86,7 +86,17 @@ void Individual::localSearch(vector< vector<int> > dist) {
 // Ugly function, needs refactoring
 Individual::Course Individual::optimizeCourse(vector< vector<int> > dist, Course c) {
 	int courseDistance = computeOneCourse(dist, c);
-	if(CITIES_PER_COURSE == 3){	
+	if(c.size() == 1) return c;
+	else if (c.size() == 2) {
+		int shuffledCities1[] = {c[1], c[0]};
+		Course shuffledCourse(shuffledCities1, shuffledCities1+2);
+		if(computeOneCourse(dist, shuffledCourse) < courseDistance){
+			courseDistance = computeOneCourse(dist, shuffledCourse);
+			c = shuffledCourse;
+		}
+	}
+	else if(CITIES_PER_COURSE == 3) {	
+
 		int shuffledCities1[] = {c[0], c[2], c[1]};
 		int shuffledCities2[] = {c[1], c[0], c[2]};
 		Course shuffledCourse(shuffledCities1, shuffledCities1+3);
@@ -94,13 +104,13 @@ Individual::Course Individual::optimizeCourse(vector< vector<int> > dist, Course
 			courseDistance = computeOneCourse(dist, shuffledCourse);
 			c = shuffledCourse;
 		}
-		c.assign(shuffledCities2, shuffledCities2+3);
+		shuffledCourse.assign(shuffledCities2, shuffledCities2+3);
 		if(computeOneCourse(dist, shuffledCourse) < courseDistance){
 			courseDistance = computeOneCourse(dist, shuffledCourse);
 			c = shuffledCourse;
 		}
 	}
-	else{
+	else {
 		int times = 4;
 		while(times--){
 			Course shuffledCourse(c);

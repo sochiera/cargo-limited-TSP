@@ -107,6 +107,34 @@ TEST(IndividualTest, OneIndividualBetterThanAnother) {
     ASSERT_EQ(true, ind2 < ind);
 }
 
+TEST(IndividualTest, LocalSearchComputesCorrectly) {
+    int tab[] = {0, 2, 3, 2,
+                 2, 0, 1, 3,
+                 3, 1, 0, 2,
+                 2, 3, 2, 0};
+    vector< vector<int> > dist;
+    for(int i = 0; i < 4; i++){
+        vector<int> distToOne;
+        distToOne.assign(tab + 4*i, tab + 4*i+4);
+        dist.push_back(distToOne);
+    }
+    
+    vector<Individual::Course> courses1;
+    Individual::Course a;
+    a.push_back(1); a.push_back(3); a.push_back(2); 
+    courses1.push_back(a);
+
+    Individual ind(courses1);
+
+    ind.evaluate(dist);
+    ASSERT_EQ(ind.getValue(), 10);
+
+    ind.localSearch(dist);
+
+    ind.evaluate(dist);
+    ASSERT_EQ(ind.getValue(), 7);
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
