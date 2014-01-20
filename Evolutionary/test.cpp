@@ -223,9 +223,9 @@ TEST(IndividualTest, CrossoverWorksCorrectly) {
     ASSERT_EQ(doubleRandom(0.5), false);
 
     srand(45);
-    ASSERT_EQ(child.getCourses()[1][0], 5);
     ASSERT_EQ(child.getCourses()[1][0], 4);
-    ASSERT_EQ(child.getCourses()[1][0], 6);
+    ASSERT_EQ(child.getCourses()[1][1], 6);
+    ASSERT_EQ(child.getCourses()[1][2], 5);
 }
 
 int main(int argc, char **argv) {

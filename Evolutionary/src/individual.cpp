@@ -66,6 +66,7 @@ bool Individual::operator<(const Individual & another) const {
 	return getValue() < another.getValue();
 }
 
+// Ugly function, needs refactoring
 Individual Individual::crossover(const Individual & dad) const {
     const vector<Individual::Course> &dadCourses = dad.getCourses();
     
