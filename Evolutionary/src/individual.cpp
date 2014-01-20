@@ -66,6 +66,24 @@ bool Individual::operator<(const Individual & another) const {
 
 pair<Individual, Individual> Individual::crossover(const Individual & dad) const {
 	return pair<Individual, Individual>(*this, dad);
+
+	// Individual son;
+	// Individual daughter;
+    const vector<Individual::Course> &momCourses = courses_;
+    const vector<Individual::Course> &dadCourses = dad.getCourses();
+    
+    vector<Individual::Course> sonCourses;
+    vector<Individual::Course> daughterCourses;
+
+    for(int i = 0; i < momCourses.size()/2; i++) {
+    	daughterCourses.push_back(momCourses[i]);
+    }
+    for(int i = 0; i < dadCourses.size()/2; i++) {
+    	sonCourses.push_back(dadCourses[i]);
+    }
+
+
+
 }
 
 void Individual::mutate() {

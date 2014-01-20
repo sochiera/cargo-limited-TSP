@@ -82,26 +82,26 @@ TEST(IndividualTest, OneIndividualBetterThanAnother) {
         dist.push_back(distToOne);
     }
     
-    vector<Individual::Course> courses1;
+    vector<Individual::Course> momCourses;
     Individual::Course a;
     a.push_back(1); a.push_back(6); a.push_back(2); 
-    courses1.push_back(a);
+    momCourses.push_back(a);
     Individual::Course b;
     b.push_back(5); b.push_back(3); 
-    courses1.push_back(b);
+    momCourses.push_back(b);
     Individual::Course c;
     c.push_back(4);
-    courses1.push_back(c);
+    momCourses.push_back(c);
 
-    Individual ind(courses1);
+    Individual ind(momCourses);
     ind.evaluate(dist);
 
-    vector<Individual::Course> courses2;
-    courses2.push_back(a);
+    vector<Individual::Course> dadCourses;
+    dadCourses.push_back(a);
     b.push_back(4);
-    courses2.push_back(b);
+    dadCourses.push_back(b);
 
-    Individual ind2(courses2);
+    Individual ind2(dadCourses);
     ind2.evaluate(dist);
 
     ASSERT_EQ(true, ind2 < ind);
@@ -119,12 +119,12 @@ TEST(IndividualTest, LocalSearchComputesCorrectly) {
         dist.push_back(distToOne);
     }
     
-    vector<Individual::Course> courses1;
+    vector<Individual::Course> momCourses;
     Individual::Course a;
     a.push_back(1); a.push_back(3); a.push_back(2); 
-    courses1.push_back(a);
+    momCourses.push_back(a);
 
-    Individual ind(courses1);
+    Individual ind(momCourses);
 
     ind.evaluate(dist);
     ASSERT_EQ(ind.getValue(), 10);
@@ -177,6 +177,45 @@ TEST(IndividualTest, MutationWorksCorrectly) {
     ASSERT_EQ(b[0], 3);
     ASSERT_EQ(b[1], 5);
     ASSERT_EQ(b[2], 6);
+}
+
+TEST(IndividualTest, CrossoverWorksCorrectly) {
+    int tab[] = {0, 1, 1, 1, 2, 2, 2,
+               1, 0, 3, 1, 3, 1, 2,
+               1, 3, 0, 2, 1, 3, 2,
+               1, 1, 2, 0, 2, 1, 3,
+               2, 3, 1, 2, 0, 3, 1,
+               2, 1, 3, 1, 3, 0, 2,
+               2, 2, 2, 3, 1, 2, 0};
+    vector< vector<int> > dist;
+    for(int i = 0; i < 7; i++){
+        vector<int> distToOne;
+        distToOne.assign(tab + 7*i, tab + 7*i+7);
+        dist.push_back(distToOne);
+    }
+    
+    vector<Individual::Course> momCourses;
+    Individual::Course a;
+    a.push_back(1); a.push_back(2); a.push_back(3); 
+    momCourses.push_back(a);
+    Individual::Course b;
+    b.push_back(4); b.push_back(5); b.push_back(6);
+    momCourses.push_back(b);
+    Individual mom(momCourses);
+
+    vector<Individual::Course> dadCourses;
+    Individual::Course c;
+    c.push_back(1); c.push_back(4); c.push_back(6); 
+    dadCourses.push_back(c);
+    Individual::Course d;
+    d.push_back(2); d.push_back(3); d.push_back(5);
+    dadCourses.push_back(d);
+    Individual dad(dadCourses);
+
+    pair<Individual, Individual> result = mom.crossover(dad);
+
+    ASSERT_EQ(result.first, mom);
+    ASSERT_EQ(result.second, dad);
 }
 
 int main(int argc, char **argv) {
