@@ -3,9 +3,28 @@
 #include <set>
 using namespace std;
 
+const int INF = 2147483647;
+
 vector <vector <int> > Distances;
 set <int> remainingCustomers;
 int N;
+
+int groupDistance(int first, int second, int third) {
+	return Distances[first][second] + Distances[second][third] + Distances[third][first];
+}
+
+int minDistanceForGroup(int first, int second, int third) {
+	if(!first) {
+	    if(!second)
+		return Distances[0][third] * 2;
+	    else
+		return Distances[0][second] + Distances[second][third] + Distances[third][0];
+	}
+	else
+	    return min(Distances[0][first] + Distances[first][second] + Distances[second][third] + Distances[third][0],
+		      min(Distances[0][second] + Distances[second][third] + Distances[third][first] + Distances[first][0],
+			    Distances[0][third] + Distances[third][first] + Distances[first][second] + Distances[second][0]));
+}
 
 void readInput() {
 	cin >> N;
@@ -22,39 +41,43 @@ void readInput() {
 
 int shortestRoute() {
 	int result = 0;
-	int currentVertex = 0;
-	int capacity;
-	cout << "Starting at " << currentVertex << endl;
-	while(!remainingCustomers.empty()){
-		if(capacity == 0)
-		{
-			result += Distances[currentVertex][0];
-			cout << "Returning to base." << endl;
-			currentVertex = 0;
+	vector <int> chosen(3);
+	while(!remainingCustomers.empty()) {
+	    int minDistance = INF;
+	    for(set <int>::iterator it = remainingCustomers.begin(); it != remainingCustomers.end(); it++)
+		if(minDistance > groupDistance(0, 0, *it))
+		    minDistance = groupDistance(chosen[0] = 0, chosen[1] = 0, chosen[2] = *it);
+	    for(set <int>::iterator it = remainingCustomers.begin(); it != remainingCustomers.end(); it++)
+	    {
+		set <int>::iterator it2 = it;
+		it2++;
+		while(it2 != remainingCustomers.end()) {
+		    if(minDistance > groupDistance(0, *it2, *it))
+			minDistance = groupDistance(chosen[0] = 0, chosen[1] = *it2, chosen[2] = *it);
+		    it2++;
 		}
-		if(currentVertex == 0) capacity = 3;
-		int minDistance = currentVertex == 0 ? Distances[0][*remainingCustomers.begin()] : Distances[currentVertex][0];
-		int closestVertex = currentVertex == 0 ? *remainingCustomers.begin() : 0;
-		cout << "Currently at " << currentVertex << " min is " << minDistance << " at " << closestVertex << endl;
-		for(set <int>::iterator it = remainingCustomers.begin(); it != remainingCustomers.end(); it++) {
-			cout << "Comparing with distance to " << *it << " which is " << Distances[currentVertex][*it] << endl;
-			if(Distances[currentVertex][*it] < minDistance)
-			{
-				cout << "New minDistance = " << Distances[currentVertex][*it] << " (to " << *it << ")" << endl;
-				closestVertex = *it;
-				minDistance = Distances[currentVertex][closestVertex];
-			}
+	    }
+	    for(set <int>::iterator it = remainingCustomers.begin(); it != remainingCustomers.end(); it++)
+	    {
+		set <int>::iterator it2 = it;
+		it2++;
+		while(it2 != remainingCustomers.end()) {
+		    set <int>::iterator it3 = it2;
+		    it3++;
+		    while(it3 != remainingCustomers.end()) {
+			if(minDistance > groupDistance(*it3, *it2, *it))
+			      minDistance = groupDistance(chosen[0] = *it3, chosen[1] = *it2, chosen[2] = *it);
+			it3++;
+		    }
+		    it2++;
 		}
-		result += Distances[currentVertex][closestVertex];
-		if(closestVertex != 0) {
-			capacity--;
-			cout << "Moving from " << currentVertex << " to " << closestVertex << endl;
-			remainingCustomers.erase(closestVertex);
-			currentVertex = closestVertex;
-		}
-		else currentVertex = 0;
+	    }
+	    result += minDistanceForGroup(chosen[0], chosen[1], chosen[2]);
+	    for(int i = 0; i < 3; i++)
+		remainingCustomers.erase(chosen[i]);
+	    cout << "removing chosen: " << chosen[0] << " " << chosen[1] << " " << chosen[2] << endl;
 	}
-	return result + Distances[currentVertex][0];
+	return result;
 }
 
 int main() {
