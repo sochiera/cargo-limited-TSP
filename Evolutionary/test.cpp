@@ -1,7 +1,7 @@
 #include "src/population.cpp"
 #include "src/individual.cpp"
-#include <gtest/gtest.h>
 #include "src/defines.hpp"
+#include <gtest/gtest.h>
 
 TEST(PopulationTest, HasDefinedSize) {
     vector<vector<int> > dist;
