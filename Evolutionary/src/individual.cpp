@@ -6,12 +6,14 @@
 
 using namespace std;
 
-Individual::Individual(vector<Individual::Course> courses) : fitnessValue(-1) {
-	courses_ = courses;
+Individual::Individual(vector<Individual::Course> courses, int cities) : 
+	fitnessValue(-1), 
+	courses_(courses), 
+	cities_(cities) {
 }
 
 
-Individual::Individual(int numberOfCities) : fitnessValue(-1) {
+Individual::Individual(int numberOfCities) : fitnessValue(-1), cities_(numberOfCities) {
 	vector<int> cities;
 	for(int i = 1; i <= numberOfCities; i++){
 		cities.push_back(i);
@@ -64,27 +66,45 @@ bool Individual::operator<(const Individual & another) const {
 	return getValue() < another.getValue();
 }
 
-pair<Individual, Individual> Individual::crossover(const Individual & dad) const {
-	return pair<Individual, Individual>(*this, dad);
-
-	// Individual son;
-	// Individual daughter;
-    const vector<Individual::Course> &momCourses = courses_;
+Individual Individual::crossover(const Individual & dad) const {
     const vector<Individual::Course> &dadCourses = dad.getCourses();
     
-    vector<Individual::Course> sonCourses;
-    vector<Individual::Course> daughterCourses;
+    vector<Individual::Course> childCourses;
 
-    for(int i = 0; i < momCourses.size()/2; i++) {
-    	daughterCourses.push_back(momCourses[i]);
+    bool was[cities_];
+    fill(was, was + cities_, false);
+
+    for(int i = 0; i < courses_.size(); i++) {
+    	if(doubleRandom(0.5)) childCourses.push_back(courses_[i]);
     }
-    for(int i = 0; i < dadCourses.size()/2; i++) {
-    	sonCourses.push_back(dadCourses[i]);
+
+    for(int i = 0; i < childCourses.size(); i++) {
+    	for(int j = 0; j < childCourses[i].size(); j++) {
+    		was[childCourses[i][j]] = true;
+    	}
     }
 
+    vector<int> rest;
+	for(int i = 0; i < dadCourses.size(); i++) {
+    	for(int j = 0; j < dadCourses[i].size(); j++) {
+    		if(!was[dadCourses[i][j]]) {
+    			rest.push_back(dadCourses[i][j]);
+    		}
+    	}
+    }
 
-
+    for(int i = 0; i < rest.size(); ) {
+		Course c;
+    	for(int j = 0; j < CITIES_PER_COURSE; j++) {
+    		if(i >= rest.size()) break; 
+    		c.push_back(rest[i]);
+    		i++;
+    	}
+    	childCourses.push_back(c);
+    }
+    return Individual(childCourses, cities_);
 }
+
 
 void Individual::mutate() {
 
