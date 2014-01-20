@@ -52,7 +52,7 @@ void Population::replacement() {
 
 void Population::iteration() {
 	reproduction();
-	// mutation();
+	mutation();
 	localSearch();
 	evaluation();
 	replacement();

@@ -22,7 +22,7 @@ int main()
 	srand(time(0));
 	readInput();
 	Population *p = new Population(N, Distances);
-	int iterations = 700;
+	int iterations = 500;
 	while(iterations--){
 		p->iteration();
 		cout << p->getBest() << endl;
