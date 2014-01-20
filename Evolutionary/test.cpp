@@ -135,6 +135,50 @@ TEST(IndividualTest, LocalSearchComputesCorrectly) {
     ASSERT_EQ(ind.getValue(), 7);
 }
 
+TEST(IndividualTest, MutationWorksCorrectly) {
+    int tab[] = {0, 1, 1, 1, 2, 2, 2,
+               2, 0, 3, 1, 3, 1, 2,
+               3, 1, 0, 2, 1, 3, 2,
+               2, 3, 3, 0, 2, 1, 3,
+               1, 1, 3, 1, 0, 3, 1,
+               2, 4, 3, 1, 3, 0, 3,
+               3, 1, 1, 1, 1, 2, 0};
+    vector< vector<int> > dist;
+    for(int i = 0; i < 7; i++){
+        vector<int> distToOne;
+        distToOne.assign(tab + 7*i, tab + 7*i+7);
+        dist.push_back(distToOne);
+    }
+    
+    vector<Individual::Course> courses;
+    Individual::Course a;
+    a.push_back(1); a.push_back(6); a.push_back(2); 
+    courses.push_back(a);
+    Individual::Course b;
+    b.push_back(5); b.push_back(3); b.push_back(4);
+    courses.push_back(b);
+    Individual ind(courses);
+
+
+    srand(45);
+    ASSERT_EQ(rand()%2, 0);
+    ASSERT_EQ(rand()%2, 1);
+    ASSERT_EQ(rand()%3, 2);
+    ASSERT_EQ(rand()%3, 1);
+    srand(45);
+    ind.mutate();
+    a = ind.getCourses()[0];
+    b = ind.getCourses()[1];
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    ASSERT_EQ(a[0], 1);
+    ASSERT_EQ(a[1], 2);
+    ASSERT_EQ(a[2], 4);
+    ASSERT_EQ(b[0], 3);
+    ASSERT_EQ(b[1], 5);
+    ASSERT_EQ(b[2], 6);
+}
+
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

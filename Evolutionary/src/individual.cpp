@@ -69,9 +69,10 @@ pair<Individual, Individual> Individual::crossover(const Individual & dad) const
 }
 
 void Individual::mutate() {
+
 	int s = courses_.size();
-	Course first = courses_[rand() % s];
-	Course second = courses_[rand() % s];
+	Course &first = courses_[rand() % s];
+	Course &second = courses_[rand() % s];
 	swap(first[rand()%first.size()], second[rand()%second.size()]);
 	fitnessValue = -1;
 }
