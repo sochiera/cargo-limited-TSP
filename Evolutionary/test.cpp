@@ -3,6 +3,10 @@
 #include "src/defines.hpp"
 #include <gtest/gtest.h>
 
+bool doubleRandom(double d) {
+    return (double(rand() % 10000)/10000.0 < d);
+}
+
 TEST(PopulationTest, HasDefinedSize) {
     vector<vector<int> > dist;
     Population p(6, dist);
@@ -62,7 +66,7 @@ TEST(IndividualTest, FitnessComputesCorrectly) {
     Individual::Course c;
     c.push_back(4);
     courses.push_back(c);
-    Individual ind(courses);
+    Individual ind(courses, 6);
     ind.evaluate(dist);
     ASSERT_EQ(ind.getValue(), 15);
 }
@@ -93,7 +97,7 @@ TEST(IndividualTest, OneIndividualBetterThanAnother) {
     c.push_back(4);
     momCourses.push_back(c);
 
-    Individual ind(momCourses);
+    Individual ind(momCourses, 3);
     ind.evaluate(dist);
 
     vector<Individual::Course> dadCourses;
@@ -101,7 +105,7 @@ TEST(IndividualTest, OneIndividualBetterThanAnother) {
     b.push_back(4);
     dadCourses.push_back(b);
 
-    Individual ind2(dadCourses);
+    Individual ind2(dadCourses, 3);
     ind2.evaluate(dist);
 
     ASSERT_EQ(true, ind2 < ind);
@@ -124,7 +128,7 @@ TEST(IndividualTest, LocalSearchComputesCorrectly) {
     a.push_back(1); a.push_back(3); a.push_back(2); 
     momCourses.push_back(a);
 
-    Individual ind(momCourses);
+    Individual ind(momCourses, 3);
 
     ind.evaluate(dist);
     ASSERT_EQ(ind.getValue(), 10);
@@ -157,7 +161,7 @@ TEST(IndividualTest, MutationWorksCorrectly) {
     Individual::Course b;
     b.push_back(5); b.push_back(3); b.push_back(4);
     courses.push_back(b);
-    Individual ind(courses);
+    Individual ind(courses, 6);
 
 
     srand(45);
@@ -201,7 +205,7 @@ TEST(IndividualTest, CrossoverWorksCorrectly) {
     Individual::Course b;
     b.push_back(4); b.push_back(5); b.push_back(6);
     momCourses.push_back(b);
-    Individual mom(momCourses);
+    Individual mom(momCourses, 6);
 
     vector<Individual::Course> dadCourses;
     Individual::Course c;
@@ -210,12 +214,18 @@ TEST(IndividualTest, CrossoverWorksCorrectly) {
     Individual::Course d;
     d.push_back(2); d.push_back(3); d.push_back(5);
     dadCourses.push_back(d);
-    Individual dad(dadCourses);
+    Individual dad(dadCourses, 6);
 
-    pair<Individual, Individual> result = mom.crossover(dad);
+    Individual child = mom.crossover(dad);
 
-    ASSERT_EQ(result.first, mom);
-    ASSERT_EQ(result.second, dad);
+    srand(45);
+    ASSERT_EQ(doubleRandom(0.5), true);
+    ASSERT_EQ(doubleRandom(0.5), false);
+
+    srand(45);
+    ASSERT_EQ(child.getCourses()[1][0], 4);
+    ASSERT_EQ(child.getCourses()[1][1], 6);
+    ASSERT_EQ(child.getCourses()[1][2], 5);
 }
 
 int main(int argc, char **argv) {

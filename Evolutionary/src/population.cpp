@@ -17,10 +17,8 @@ Population::Population(int cities, vector<vector<int> > dist) :
 
 void Population::reproduction(){
 	for(int i = 0; i < POPULATION_SIZE; i += 2) {
-		pair<Individual, Individual> children = 
-			individuals_[i].crossover(individuals_[i+1]);
-		individuals_.push_back(children.first);
-		individuals_.push_back(children.second);
+		individuals_.push_back(individuals_[i].crossover(individuals_[i+1]));
+		individuals_.push_back(individuals_[i+1].crossover(individuals_[i]));
 	}
 }
 
