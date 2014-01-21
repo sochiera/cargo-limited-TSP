@@ -26,7 +26,7 @@ Example:
 
 
 Algorytm ewolucyjny
--------------------
+===================
 
 
 *Osobnik*
@@ -36,23 +36,20 @@ Osobnik zkłada się z kursów, a każdy kurs zapisuje odwiedzenie kilku miast w
 
 
 Reproduction
-~~~~~~~~~~~~
+------------
 
 
 W tej fazie osobniki dzielą się w pary i przez crossover generują potomków.
 Każdych 2 osobników tworzy 2 potomków.
 
 
-
-Crossover
-^^^^^^^^^
-
+*Crossover*
 
 Z dużym prawdopodobieństwem dla każdego kursu pierwszego z rodziców dołączamy go do potomka. Z reszty nieodwiedzonych miast tworzymy kursy maksymalnej ładowności, w kolejości, w jakiej występują one w drugim z rodziców.
 
 
 Mutation
-~~~~~~~~
+--------
 
 
 Mutacja polega na zamianie 2 miast z różnych kursów.
@@ -62,7 +59,7 @@ Np. jeśli prawdopodobieństwo mutacji wynosi 90%, to osobnik zostanie zmutowany
 
 
 Local Search
-~~~~~~~~~~~~
+------------
 
 
 W przypadku ograniczenia ładowności do 3, local search polega na zastapieniu każdego z kursów przez optymalny.
@@ -70,14 +67,14 @@ Jeśli ładowność jest ograniczona do >3, to przeszukiwani lokalne polega na z
 
 
 Evaluation
-~~~~~~~~~~
+----------
 
 
 Jest to krok, w którym oceniamy każdego osobnika, obliczając jesgo funkcję przystosowania.
 
 
 Replacement
-~~~~~~~~~~~
+-----------
 
 
 Polega na zastąpieniu starej populacji przez nową.
