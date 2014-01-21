@@ -4,8 +4,7 @@ cargo-limited-TSP
 The goal of the project is to solve TSP with distribution centre and limited number of packages that can be taken at one time. 
 
 
-Building
-~~~~~~~~
+*Building:*
 
 To build the program, you need g++ and cmake.
 Go to Evolutionary/ directory and type 'make'.
@@ -16,8 +15,7 @@ Go to Evolutionary/ directory and type 'make test'.
 Commands above will create in directory Evolutionary/bin/ 
 executable files 'Solve' and 'runTests'.
 
-Running
-~~~~~~~
+*Running:*
 
 Example:
 
@@ -30,8 +28,7 @@ Example:
 Algorytm ewolucyjny
 -------------------
 
-Osobnik
-^^^^^^^
+*Osobnik*
 Każdy osobnik zapisuje jeden sposób dostarczenia kontenerów do miast.
 Osobnik zkłada się z kursów, a każdy kurs zapisuje odwiedzenie kilku miast w podanej kolejności.
 
@@ -41,7 +38,7 @@ W tej fazie osobniki dzielą się w pary i przez crossover generują potomków.
 Każdych 2 osobników tworzy 2 potomków.
 
 Crossover
-~~~~~~~~~
+^^^^^^^^^
 Z dużym prawdopodobieństwem dla każdego kursu pierwszego z rodziców dołączamy go do potomka. Z reszty nieodwiedzonych miast tworzymy kursy maksymalnej ładowności, w kolejości, w jakiej występują one w drugim z rodziców.
 
 Mutation
